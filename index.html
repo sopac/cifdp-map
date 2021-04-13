@@ -1,0 +1,87 @@
+<html>
+
+<head>
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <title>CIFDP Forecast Web Mapping Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="node_modules/leaflet-timedimension/dist/leaflet.timedimension.control.min.css" />
+
+    <style>
+        body {
+            font-family: "Roboto";
+        }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div align="center">
+        <table style="width: 96%;">
+            <tr>
+                <td>
+                    <img style="height: 63px; margin-right: 10px; margin-top: 10px;" src="logos/spc.png" />
+                    <img style="height: 80px;" src="logos/fj_arms.png" />
+                    <img style="height: 87px;" src="logos/cosppac.png" />
+                    <img style="height: 74px;" src="logos/wmo.png" />
+                </td>
+                <td style="text-align: right;">
+                    <h1>Coastal Inundation Forecast Demostration Project (CIFDP)</h1>
+                    <h2>High Resolution <b>Wave</b> Forecast</h2>
+                </td>
+
+            </tr>
+        </table>
+
+
+        <hr />
+
+        <div class="img-thumbnail" align="left" style="height: 70%; width: 800px">
+            <div id="map" style="height: 100%; width: 100%"></div>
+        </div>
+
+        <br />
+
+        <img class="img-thumbnail" id="static-chart"
+            src="http://192.168.8.100:8080/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
+
+
+        <br />
+
+        <iframe src="/chart/" title="iframe Example 1" width="100%" height="500">
+        </iframe>
+
+        <!--footer-->
+        <hr />
+        &copy; 2021 Geoscience, Energy and Maritime Division, Pacific Community (SPC)<br /><br />
+
+
+    </div>
+    <script type="text/javascript" src="node_modules/leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript" src="node_modules/iso8601-js-period/iso8601.js"></script>
+    <script type="text/javascript" src="node_modules/leaflet-timedimension/dist/leaflet.timedimension.min.js"></script>
+    <script type="text/javascript" src="node_modules/leaflet.nontiledlayer/dist/NonTiledLayer.js"></script>
+    <script type="text/javascript" src="baselayers.js"></script>
+
+
+
+    <!--
+    <script type="text/javascript" src="node_modules/pym.js/dist/pym.v1.min.js"></script>
+    <script type="text/javascript" src="Leaflet-WMS.min.js"></script>
+  
+    <script type="text/javascript" src="leaflet.timedimension.circlelabelmarker.js"></script>
+    <script type="text/javascript" src="leaflet.timedimension.layer.wms.timeseries.js"></script>    
+    -->
+
+
+    <script type="text/javascript" src="index.js"></script>
+
+
+</body>
+
+</html>
