@@ -2,6 +2,17 @@
 *    Return common layers used in different examples
 */
 function getCommonBaseLayers(map){
+    var BING_KEY = 'AuhiCJHlGzhg93IqUH_oCpl_-ZUrIE6SPftlyGYUvr9Amx5nzA-WqGcPquyFZl4L';
+
+    //var bingLayer = L.tileLayer.bing(BING_KEY, {
+    //    imagerySet:'AerialWithLabels'
+    //});    
+
+    var bingLayer = L.tileLayer.bing({
+        bingMapsKey: BING_KEY,
+        imagerySet: 'AerialWithLabels'
+    });
+
     var osmLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; Pacific Community (OSM)'
     });
@@ -24,6 +35,7 @@ function getCommonBaseLayers(map){
     osmLayer.addTo(map);
     return {
         "OSM": osmLayer,
+        "Bing": bingLayer,
         "EMODnet Bathymetry": bathymetryGroupLayer        
     };
 }

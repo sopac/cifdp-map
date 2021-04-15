@@ -27,14 +27,14 @@
                 <td>
                     <img style="height: 63px; margin-right: 10px; margin-top: 10px;" src="logos/spc.png" />
                     <img style="height: 80px;" src="logos/fj_arms.png" />
-                    <img style="height: 87px;" src="logos/cosppac.png" />
-                    <img style="height: 74px;" src="logos/wmo.png" />
+                    <img style="height: 84px;" src="logos/cosppac.png" />
+                    <img style="height: 70px;" src="logos/wmo.png" />
+                    <img style="height: 90px;" src="logos/kma.png" />
                 </td>
                 <td style="text-align: right;">
-                    <h1>Coastal Inundation Forecast Demostration Project (CIFDP)</h1>
-                    <h2>High Resolution <b>Wave</b> Forecast</h2>
+                    <h3>Coastal Inundation Forecast Demostration Project (CIFDP)</h3>
+                    <p>High Resolution <b>Inundation</b> Forecast</p>
                 </td>
-
             </tr>
         </table>
 
@@ -48,7 +48,7 @@
         <br />
 
         <img class="img-thumbnail" id="static-chart"
-            src="http://192.168.8.100:8080/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
+            src="/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
 
 
         <br />
@@ -66,6 +66,9 @@
     <script type="text/javascript" src="node_modules/iso8601-js-period/iso8601.js"></script>
     <script type="text/javascript" src="node_modules/leaflet-timedimension/dist/leaflet.timedimension.min.js"></script>
     <script type="text/javascript" src="node_modules/leaflet.nontiledlayer/dist/NonTiledLayer.js"></script>
+    <script type="text/javascript" src="node_modules/leaflet-bing-layer/leaflet-bing-layer.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise"></script>
+
     <script type="text/javascript" src="baselayers.js"></script>
 
 

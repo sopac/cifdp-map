@@ -12,10 +12,7 @@ var map = L.map('map', {
     fullscreenControl: true,
 });
 
-//basemap
-//var base = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//}).addTo(map);
+
 
 var host = "http://192.168.8.100:8080/"
 
@@ -26,10 +23,12 @@ var wmsLayer_Hs = L.tileLayer.wms(wmsUrl, {
     layers: '1/Hs',
     format: 'image/png',
     transparent: true,
-    colorscalerange: '-9, 2.76',
+    //opacity: 1,
+    colorscalerange: '0, 2.76',
     abovemaxcolor: "extend",
     belowmincolor: "extend",
-    numcolorbands: 250,
+    numcolorbands: 50,
+    scaleMin: 0,
     styles: 'default-scalar/x-Sst',
     //styles: 'default-scalar/div-BuRd',
     attribution: 'SPC CIFDP',
@@ -166,10 +165,11 @@ var popup = L.popup();
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
-        .setContent(e.containerPoint.x + ", " + e.containerPoint.y + " : " + e.latlng)
+        //.setContent(e.containerPoint.x + ", " + e.containerPoint.y + " : " + e.latlng)
+        .setContent(e.latlng + "")
         .openOn(map);
 
-        var isrc = "http://192.168.8.100:8080/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y="+ Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790"
+        var isrc = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y="+ Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790"
 
         document.getElementById("static-chart").src = isrc;
     

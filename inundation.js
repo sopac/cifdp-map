@@ -2,11 +2,11 @@
 
 
 var map = L.map('map', {
-    zoom: 9,
-    center: [-18.6, 177.8],
+    zoom: 13,
+    center: [-18.15, 177.45],
     timeDimension: true,
     timeDimensionOptions: {
-        timeInterval: "2021-01-01T00:00:00Z/2021-08-30T00:00:00Z",
+        timeInterval: "2021-04-10T00:00:00Z/2021-04-10T00:00:00Z",
         period: "PT1H"
     },
     timeDimensionControl: true,
@@ -20,26 +20,34 @@ var map = L.map('map', {
 
 var host = "http://192.168.8.100:8080/"
 
-var wmsUrl = host + "ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=1";
-
-
-
-
-
-
-
-
-
+var wmsUrl = host + "ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0";
 
 // Create and add a TimeDimension Layer to the map
 
-//tdLayer_Hs.addTo(map);
-//tdLayer_Tp.addTo(map);
-//tdLayer_L.addTo(map);
-//tdLayer_Dp.addTo(map);
-//tdLayer_Hswell.addTo(map);
+//wmslayers
+var wmsLayer_In = L.tileLayer.wms(wmsUrl, {
+    layers: 'Cuvu-2021-04-10T00/z',
+    format: 'image/png',
+    transparent: true,
+    colorscalerange: '-2, 34.78',
+    abovemaxcolor: "extend",
+    belowmincolor: "extend",
+    numcolorbands: 250,
+    //styles: 'default-scalar/x-Sst',
+    styles: 'default-scalar/div-BuRd',
+    attribution: 'SPC CIFDP',
+
+});
+
+var tdLayer_In = L.timeDimension.layer.wms(wmsLayer_In, {
+    updateTimeDimension: true,
+    name: "Water Level (m)",
+    units: "m",
+    enableNewMarkers: true
+});
 
 //legend.addTo(map);
+tdLayer_In.addTo(map);
 
 var popup = L.popup();
 function onMapClick(e) {
@@ -58,7 +66,7 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 
 var overlayMaps = { 
-    //"Wave Height (Hs)": tdLayer_Hs,
+    "Cuvu Inundation Site 1": tdLayer_In,
 };
 
 var baseLayers = getCommonBaseLayers(map);
@@ -95,20 +103,39 @@ function populateLayers()
                             numcolorbands: 250,
                             styles: 'default-scalar/x-Sst',
                             //styles: 'default-scalar/div-BuRd',
-                            attribution: 'SPC CIFDP',                        
+                            attribution: 'SPC CIFDP',   
+                            //times: ['2021-04-10T06'],                            
+                            //times: '2021-04-07T11:00:00.000Z'
                         });
+
+                       
+                        //var td = L.TimeDimension({
+                        //    times: '2020-12-07T11:00:00.000Z',
+                        //});
 
                         var td_Layer = L.timeDimension.layer.wms(layer, {
                             updateTimeDimension: true,
                             requestTimeFromCapabilities: true,
+                            //setDefaultTime: true,
                             name: "Wave Height",
                             units: "m",
-                            enableNewMarkers: true
+                            enableNewMarkers: true,
+                            //timeDimension: true,
+                            //timeDimensionOptions: {
+                            //    times: '2020-12-07T11:00:00.000Z',
+                            //}
+                            //times: '2021-04-07T11:00:00.000Z',
+                            //timeDimension.times: '2021-04-07T11:00:00.000Z',
+                            
                         });
+
+                        //console.log(td_Layer.getCurrentTime());
+
+                        //td_Layer.getTimeDimension.setDefaultTime('021-04-07T11:00:00.000Z');
 
                         //layerControl.addOverlay(layerName, layer);
 
-                        td_Layer.addTo(map);
+                        //td_Layer.addTo(map);
                         
 
                         
