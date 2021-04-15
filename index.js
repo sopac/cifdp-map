@@ -170,12 +170,22 @@ function onMapClick(e) {
         .openOn(map);
 
         var isrc = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y="+ Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790"
+        //document.getElementById("static-chart").src = isrc;    
 
-        document.getElementById("static-chart").src = isrc;
-    
-        //http://192.168.8.100:8080/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790
-        //http://localhost:8080/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hs,1/Hswell,1/Tp,1/L&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png
-   
+        var latt = e.latlng.lat;
+        var longg = e.latlng.lng;
+ 
+        var isLongInRange = longg >= 176.75354 && longg <= 178.849732;
+        var isLatiInRange = latt >= -19.314324 && latt <= -17.732428;
+        var value = Boolean(isLongInRange) && Boolean(isLatiInRange);
+        
+        if(value){
+            document.getElementById("static-chart").src = isrc;
+        }
+        else{
+            alert('Please click inside the boundary');
+        }
+        
 }
 map.on('click', onMapClick);
 
