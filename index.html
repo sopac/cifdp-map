@@ -11,7 +11,7 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="node_modules/leaflet-timedimension/dist/leaflet.timedimension.control.min.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
     <style>
@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <img style="height: 80px;" src="logos/fj_arms.png" />
-                    <img style="height: 63px; margin-right: 10px; margin-top: 10px;" src="logos/spc.png" />                    
+                    <img style="height: 63px; margin-right: 10px; margin-top: 10px;" src="logos/spc.png" />
                     <img style="height: 84px;" src="logos/cosppac.png" />
                     <img style="height: 70px;" src="logos/wmo.png" />
                     <img style="height: 90px;" src="logos/kma.png" />
@@ -50,8 +50,11 @@
 
         <br />
 
-        <img class="img-thumbnail" id="static-chart"
-            src="/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
+        <img class="img-thumbnail" id="static-chart-1"
+            src="/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hs&QUERY_LAYERS=1/Hs,1/Hswell&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
+
+        <img class="img-thumbnail" id="static-chart-2"
+            src="/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Tp&QUERY_LAYERS=1/Tp,1/L&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=434&Y=361&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790" />
 
 
         <br />
