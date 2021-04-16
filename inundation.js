@@ -140,7 +140,8 @@ var icontest = new L.Icon({
 
 var myFeatureGroup = L.featureGroup().addTo(map);
 var marker, test;
-console.log(check_site);
+
+//console.log(check_site);
 //
 for (var i = 0; i < locations.length; i++) {
     var vv;    

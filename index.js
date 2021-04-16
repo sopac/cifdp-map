@@ -181,7 +181,7 @@ function onMapClick(e) {
         document.getElementById("static-chart").src = isrc;
     }
     else {
-        alert('Please click inside the boundary');
+        alert('Click Inside Boundary.');
     }
 
 }
@@ -266,7 +266,7 @@ for (var i = 0; i < locations.length; i++) {
         yesno = "No";
     }
     var msg = " " + yesno + " Inundation @ ";
-    marker = new L.marker([locations[i][1], locations[i][2]],{icon: vv}).addTo(myFeatureGroup).bindPopup("<center><p>"+msg+locations[i][0]+" site"+"</p></center>").bindTooltip(locations[i][0]);
+    marker = new L.marker([locations[i][1], locations[i][2]],{icon: vv}).addTo(myFeatureGroup).bindPopup("<center>" + msg + locations[i][0] + " Site" + "<br/><a href='inundation.html'>Details</a></center>").bindTooltip(locations[i][0]);
     marker.test = test;
   }
 
