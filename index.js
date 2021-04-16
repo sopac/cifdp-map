@@ -14,7 +14,8 @@ var map = L.map('map', {
 
 
 
-var host = "http://192.168.8.100:8080/"
+//var host = "http://192.168.8.100:8080/"
+var host = "http://" + self.location.host + "/";
 
 var wmsUrl = host + "ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=1";
 

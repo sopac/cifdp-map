@@ -3,8 +3,8 @@
 <%@ page import="java.util.*" %>
 <%
 String path = "/home/sachin/Documents/CIFDP_FORECAST_2021/inundation/";
-//String sites[] = {"Cuvu", "Komave", "Korotogo", "MauiBay"};
-String sites[] = {"Cuvu", "Komave", "Korotogo"};
+String sites[] = {"Cuvu", "Komave", "Korotogo", "MauiBay"};
+//String sites[] = {"Cuvu", "Komave", "Korotogo"};
 ArrayList<String> res = new ArrayList<String>();
 File fpath = new File(path);
 for (File f : fpath.listFiles()){
