@@ -136,7 +136,7 @@ legend.onAdd = function (map) {
     var src = host + "ncWMS2/wms?SERVICE=WMS&VERSION=1.3.0&DATASET=1&REQUEST=GetLegendGraphic&LAYER=1/Hs&colorscalerange=-9.0,2.76&PALETTE=default-scalar/x-Sst&numcolorbands=250&transparent=TRUE&width=10";
     var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML +=
-        '<img src="' + src + '" alt="legend">';
+        '<img style="height: 300px;" src="' + src + '" alt="legend">';
     return div;
 };
 
@@ -185,5 +185,97 @@ function onMapClick(e) {
     }
 
 }
+
+//"Cuvu", "Komave", "Korotogo", "MauiBay"
+let check_site = getSitesToPlot();
+
+var redIcon = new L.Icon({
+    iconUrl: 'img/marker-icon-2x-red.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+});
+
+var greenIcon = new L.Icon({
+    iconUrl: 'img/marker-icon-2x-green.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+});
+
+var icontest = new L.Icon({
+    iconUrl: 'img/alert.gif',
+    iconSize: [41, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+});
+
+var myFeatureGroup = L.featureGroup().addTo(map);
+var marker, test;
+
+var myFeatureGroup = L.featureGroup().addTo(map).on("click", groupClick);
+var marker, test;
+var locations = [
+    ["Cuvu", -18.134225, 177.418035, "site1"],
+    ["Korotogo", -18.170216, 177.534531, "site1"],
+    ["Komave", -18.227696, 177.772865, "site1"],
+    ["MauiBay", -18.204506, 177.673125, "site1"]
+  ];
+for (var i = 0; i < locations.length; i++) {
+    test = "test";
+    var vv;
+    var yesno ="";
+    if (locations[i][0] == "Cuvu"){
+        if (check_site[0] == 1){
+            vv = icontest;
+        }
+        else{
+            vv = greenIcon;
+            yesno = "No";
+        }
+    }
+    else if (locations[i][0] == "Korotogo"){
+        if (check_site[2] == 1){
+            vv = icontest;
+        }
+        else{
+            vv = greenIcon;
+            yesno = "No";
+        }
+    }
+    else if (locations[i][0] == "Komave"){
+        if (check_site[1] == 1){
+            vv = icontest;
+        }
+        else{
+            vv = greenIcon;
+            yesno = "No";
+        }
+    }
+    else if (locations[i][0] == "MauiBay"){
+        if (check_site[3] == 1){
+            vv = icontest;
+        }
+        else{
+            vv = greenIcon;
+            yesno = "No";
+        }
+    }
+    else{
+        vv = greenIcon;
+        yesno = "No";
+    }
+    var msg = " " + yesno + " Inundation @ ";
+    marker = new L.marker([locations[i][1], locations[i][2]],{icon: vv}).addTo(myFeatureGroup).bindPopup("<center><p>"+msg+locations[i][0]+" site"+"</p></center>").bindTooltip(locations[i][0]);
+    marker.test = test;
+  }
+
+ 
+function groupClick(event) {
+  console.log("Clicked on marker " + event.layer.test);  
+}
+
+
+//map events
 map.on('click', onMapClick);
 

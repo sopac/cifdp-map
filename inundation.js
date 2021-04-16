@@ -39,9 +39,6 @@ var locations = [
 ];
 
 function activateLayer(id) {
-
-    //var l = this._layers[id];
-    //map.fitBounds(l.getBounds());
     map.eachLayer(function (lyr) {
         console.log(id);
         if (lyr._leaflet_id == id) {
@@ -54,6 +51,8 @@ function activateLayer(id) {
         }
     });
 }
+
+
 
 
 
@@ -84,7 +83,7 @@ function populateLayers() {
                             attribution: 'SPC CIFDP',
                         });
                         layer.addTo(map);
-                        layerName = layerName.replace("T", ":") + "00";                                                                     
+                        layerName = layerName.replace("T", ":") + "00";
                         layerName = layerName.replace("-", " @ ");
 
                         //html table rename
@@ -115,6 +114,8 @@ function populateLayers() {
     var layerControl = L.control.layers(baseLayers, overlayMaps).addTo(map);
 }
 
+//"Cuvu", "Komave", "Korotogo", "MauiBay"
+let check_site = getSitesToPlot();
 
 var redIcon = new L.Icon({
     iconUrl: 'img/marker-icon-2x-red.png',
@@ -122,6 +123,7 @@ var redIcon = new L.Icon({
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
 });
+
 var greenIcon = new L.Icon({
     iconUrl: 'img/marker-icon-2x-green.png',
     iconSize: [25, 41],
@@ -138,15 +140,44 @@ var icontest = new L.Icon({
 
 var myFeatureGroup = L.featureGroup().addTo(map);
 var marker, test;
-
-
+console.log(check_site);
+//
 for (var i = 0; i < locations.length; i++) {
-    var vv;
+    var vv;    
     if (locations[i][0] == "Cuvu") {
-        vv = icontest;
+        if (check_site[0] == 1) {
+            vv = icontest;
+        }
+        else {
+            vv = greenIcon;
+        }
+    }
+    else if (locations[i][0] == "Korotogo") {
+        if (check_site[2] == 1) {
+            vv = icontest;
+        }
+        else {
+            vv = greenIcon;
+        }
+    }
+    else if (locations[i][0] == "Komave") {
+        if (check_site[1] == 1) {
+            vv = icontest;
+        }
+        else {
+            vv = greenIcon;
+        }
+    }
+    else if (locations[i][0] == "MauiBay") {
+        if (check_site[3] == 1) {
+            vv = icontest;
+        }
+        else {
+            vv = greenIcon;
+        }
     }
     else {
-        vv = icontest;
+        vv = greenIcon;
     }
     marker = new L.marker([locations[i][1], locations[i][2]], { icon: vv }).addTo(myFeatureGroup).bindPopup("<center><h3>" + locations[i][0] + "-" + locations[i][3] + "</h3></center><img style='width: 740px;' src='img/" + locations[i][0] + "-WL-" + locations[i][3].replace("-", "").toLowerCase() + ".png'>", { maxWidth: "auto" }).bindTooltip(locations[i][0] + "-" + locations[i][3]);
 }
