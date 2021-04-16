@@ -78,7 +78,7 @@ var wmsLayer_Dp = L.tileLayer.wms(wmsUrl, {
     //markerspacing: 12,
     //markerclipping: true,
     styles: 'spc',
-    attribution: 'SPC CIFDP',    
+    attribution: 'SPC CIFDP',
 });
 
 var wmsLayer_Hswell = L.tileLayer.wms(wmsUrl, {
@@ -132,7 +132,7 @@ var legend = L.control({
     position: 'bottomright'
 });
 
-legend.onAdd = function(map) {
+legend.onAdd = function (map) {
     var src = host + "ncWMS2/wms?SERVICE=WMS&VERSION=1.3.0&DATASET=1&REQUEST=GetLegendGraphic&LAYER=1/Hs&colorscalerange=-9.0,2.76&PALETTE=default-scalar/x-Sst&numcolorbands=250&transparent=TRUE&width=10";
     var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML +=
@@ -153,7 +153,6 @@ var baseLayers = getCommonBaseLayers(map);
 L.control.layers(baseLayers, overlayMaps).addTo(map);
 
 // Create and add a TimeDimension Layer to the map
-
 tdLayer_Hs.addTo(map);
 //tdLayer_Tp.addTo(map);
 //tdLayer_L.addTo(map);
@@ -166,27 +165,25 @@ var popup = L.popup();
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
-        //.setContent(e.containerPoint.x + ", " + e.containerPoint.y + " : " + e.latlng)
         .setContent(e.latlng + "")
         .openOn(map);
 
-        var isrc = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y="+ Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790"
-        //document.getElementById("static-chart").src = isrc;    
+    var isrc = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y=" + Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790"
 
-        var latt = e.latlng.lat;
-        var longg = e.latlng.lng;
- 
-        var isLongInRange = longg >= 176.75354 && longg <= 178.849732;
-        var isLatiInRange = latt >= -19.314324 && latt <= -17.732428;
-        var value = Boolean(isLongInRange) && Boolean(isLatiInRange);
-        
-        if(value){
-            document.getElementById("static-chart").src = isrc;
-        }
-        else{
-            alert('Please click inside the boundary');
-        }
-        
+    var latt = e.latlng.lat;
+    var longg = e.latlng.lng;
+
+    var isLongInRange = longg >= 176.75354 && longg <= 178.849732;
+    var isLatiInRange = latt >= -19.314324 && latt <= -17.732428;
+    var value = Boolean(isLongInRange) && Boolean(isLatiInRange);
+
+    if (value) {
+        document.getElementById("static-chart").src = isrc;
+    }
+    else {
+        alert('Please click inside the boundary');
+    }
+
 }
 map.on('click', onMapClick);
 

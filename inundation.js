@@ -4,8 +4,6 @@ var map = L.map('map', {
     center: [-18.15, 177.63],
 });
 
-
-
 //var host = "http://192.168.8.100:8080/"
 var host = "http://" + self.location.host + "/";
 
@@ -26,6 +24,37 @@ var overlayMaps = {
 };
 var baseLayers = getCommonBaseLayers(map);
 //var layerControl = L.control.layers(baseLayers, overlayMaps).addTo(map);
+
+var locations = [
+    ["Cuvu", -18.134225, 177.418035, "Site-1"],
+    ["Cuvu", -18.145161, 177.422334, "Site-2"],
+    ["Cuvu", -18.168178, 177.466828, "Site-3"],
+    ["Korotogo", -18.170216, 177.534531, "Site-1"],
+    ["Korotogo", -18.181435, 177.562147, "Site-2"],
+    ["Korotogo", -18.184183, 177.609472, "Site-3"],
+    ["Komave", -18.227696, 177.772865, "Site-1"],
+    ["Komave", -18.221285, 177.758369, "Site-2"],
+    ["Komave", -18.213895, 177.729305, "Site-3"],
+    ["MauiBay", -18.204506, 177.673125, "Site-1"]
+];
+
+function activateLayer(id) {
+
+    //var l = this._layers[id];
+    //map.fitBounds(l.getBounds());
+    map.eachLayer(function (lyr) {
+        console.log(id);
+        if (lyr._leaflet_id == id) {
+            layer_name = lyr.options.layers;
+            for (var i = 0; i < locations.length; i++) {
+                if (layer_name.startsWith(locations[i][0])) {
+                    map.flyTo([locations[i][1], locations[i][2]], 15);
+                }
+            }
+        }
+    });
+}
+
 
 
 function populateLayers() {
@@ -55,22 +84,26 @@ function populateLayers() {
                             attribution: 'SPC CIFDP',
                         });
                         layer.addTo(map);
-                        layerName = layerName.replace("T", ":") + "00";
+                        layerName = layerName.replace("T", ":") + "00";                                                                     
                         layerName = layerName.replace("-", " @ ");
+
+                        //html table rename
+                        layerNameTable = layerName.replace("Cuvu @ ", "");
+                        layerNameTable = layerNameTable.replace("Korotogo @ ", "");
+                        layerNameTable = layerNameTable.replace("Komave @ ", "");
+                        layerNameTable = layerNameTable.replace("MauiBay @ ", "");
+
                         overlayMaps[layerName] = layer;
 
                         //populate layer tables                        
                         if (layerName.startsWith("Cuvu"))
-                            document.getElementById("t_Cuvu").innerHTML += "<a href='#'>" + layerName + "</a><br/>";
+                            document.getElementById("t_Cuvu").innerHTML += "<a href='#' onclick='activateLayer(" + layer._leaflet_id + ")'>" + layerNameTable + "</a><br/>";
                         if (layerName.startsWith("Korotogo"))
-                            document.getElementById("t_Korotogo").innerHTML += "<a href='#'>" + layerName + "</a><br/>";
+                            document.getElementById("t_Korotogo").innerHTML += "<a href='#' onclick='activateLayer(" + layer._leaflet_id + ")'>" + layerNameTable + "</a><br/>";
                         if (layerName.startsWith("Komave"))
-                            document.getElementById("t_Komave").innerHTML += "<a href='#'>" + layerName + "</a><br/>";
+                            document.getElementById("t_Komave").innerHTML += "<a href='#' onclick='activateLayer(" + layer._leaflet_id + ")'>" + layerNameTable + "</a><br/>";
                         if (layerName.startsWith("Maui"))
-                            document.getElementById("t_Maui").innerHTML += "<a href='#'>" + layerName + "</a><br/>";
-
-
-
+                            document.getElementById("t_Maui").innerHTML += "<a href='#' onclick='activateLayer(" + layer._leaflet_id + ")'>" + layerNameTable + "</a><br/>";
 
                     }
                 }
@@ -81,6 +114,7 @@ function populateLayers() {
     //post add
     var layerControl = L.control.layers(baseLayers, overlayMaps).addTo(map);
 }
+
 
 var redIcon = new L.Icon({
     iconUrl: 'img/marker-icon-2x-red.png',
@@ -105,18 +139,7 @@ var icontest = new L.Icon({
 var myFeatureGroup = L.featureGroup().addTo(map);
 var marker, test;
 
-var locations = [
-    ["Cuvu", -18.134225, 177.418035, "Site-1"],
-    ["Cuvu", -18.145161, 177.422334, "Site-2"],
-    ["Cuvu", -18.168178, 177.466828, "Site-3"],
-    ["Korotogo", -18.170216, 177.534531, "Site-1"],
-    ["Korotogo", -18.181435, 177.562147, "Site-2"],
-    ["Korotogo", -18.184183, 177.609472, "Site-3"],
-    ["Komave", -18.227696, 177.772865, "Site-1"],
-    ["Komave", -18.221285, 177.758369, "Site-2"],
-    ["Komave", -18.213895, 177.729305, "Site-3"],
-    ["MauiBay", -18.204506, 177.673125, "Site-1"]
-];
+
 for (var i = 0; i < locations.length; i++) {
     var vv;
     if (locations[i][0] == "Cuvu") {
@@ -127,7 +150,6 @@ for (var i = 0; i < locations.length; i++) {
     }
     marker = new L.marker([locations[i][1], locations[i][2]], { icon: vv }).addTo(myFeatureGroup).bindPopup("<center><h3>" + locations[i][0] + "-" + locations[i][3] + "</h3></center><img style='width: 740px;' src='img/" + locations[i][0] + "-WL-" + locations[i][3].replace("-", "").toLowerCase() + ".png'>", { maxWidth: "auto" }).bindTooltip(locations[i][0] + "-" + locations[i][3]);
 }
-
 
 populateLayers();
 
