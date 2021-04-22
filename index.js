@@ -2,6 +2,7 @@
 
 var map = L.map('map', {
     zoom: 9,
+    minzoom: 9,
     center: [-18.6, 177.8],
     timeDimension: true,
     timeDimensionOptions: {
