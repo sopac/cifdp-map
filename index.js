@@ -2,7 +2,7 @@
 
 var map = L.map('map', {
     zoom: 9,
-    minzoom: 9,
+    minZoom: 9,
     center: [-18.6, 177.8],
     timeDimension: true,
     timeDimensionOptions: {
@@ -16,7 +16,8 @@ var map = L.map('map', {
 
 
 //var host = "http://192.168.8.100:8080/"
-var host = "http://" + self.location.host + "/";
+var host = "http://202.62.118.201:8080/"
+//var host = "http://" + self.location.host + "/";
 
 var wmsUrl = host + "ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=1";
 
@@ -169,9 +170,6 @@ function onMapClick(e) {
         .setContent(e.latlng + "")
         .openOn(map);
 
-    var isrc1 = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hs&QUERY_LAYERS=1/Hs,1/Hswell&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y=" + Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790";
-    var isrc2 = "/ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Tp&QUERY_LAYERS=1/Tp,1/L&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y=" + Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=image/png&CHARTWIDTH=790";
-
     var latt = e.latlng.lat;
     var longg = e.latlng.lng;
 
@@ -180,8 +178,84 @@ function onMapClick(e) {
     var value = Boolean(isLongInRange) && Boolean(isLatiInRange);
 
     if (value) {
-        document.getElementById("static-chart-1").src = isrc1;
-        document.getElementById("static-chart-2").src = isrc2;
+        let url = host+"ncWMS2/wms?REQUEST=GetTimeseries&LAYERS=1/Hswell&QUERY_LAYERS=1/Hswell,1/Tp,1/L,1/Hs&BBOX=176.7314,-19.385,178.8734,-17.6714&SRS=CRS:84&FEATURE_COUNT=5&HEIGHT=500&WIDTH=950&X=" + Math.round(e.containerPoint.x) + "&Y="+ Math.round(e.containerPoint.y) + "&STYLES=default/default&VERSION=1.1.1&TIME=2021-02-18T00:00:00.000Z/2021-02-25T00:00:00.000Z&INFO_FORMAT=text/json&CHARTWIDTH=790";
+
+        let xl = [];
+        let yl = [];
+        let hs = [];
+        let tp = [];
+        let L = [];
+        Plotly.d3.json(url, function(figure){
+        let dt = figure.domain['axes']['t']['values']
+        let hswell = figure.ranges['Hswell']['values']
+        let hs_dat = figure.ranges['Hs']['values']
+        let tp_dat = figure.ranges['Tp']['values']
+        let L_dat = figure.ranges['L']['values']
+        for (var i=0; i< dt.length; i++){
+            xl.push(dt[i])
+            yl.push(hswell[i])
+            hs.push(hs_dat[i])
+            tp.push(tp_dat[i])
+            L.push(L_dat[i])
+        }
+        var trace = {
+        x: xl,
+        y: yl,
+        name: 'Swell Height(m)'
+        };
+        let trace2 = {
+            x: xl,
+            y: hs,
+            name: 'Wave Height(m)'
+            };
+        let trace3 = {
+            x: xl,
+            y: tp,
+            name: 'Wave Period(s)',
+            yaxis: 'y3'
+            };
+        let trace4 = {
+            x: xl,
+            y: L,
+            name: 'Wave Length(m)',
+            yaxis: 'y4'
+            };
+        var data = [trace, trace2, trace3, trace4];
+        var layout = {
+            title: 'Timeseries of variable: Hswell, Hs, Tp and L',
+            width: 1300,
+            xaxis: {domain: [0.1, 0.92]},
+            yaxis: {
+              title: 'Swell & Wave Height (m)',
+              titlefont: {color: '#1f77b4'},
+              tickfont: {color: '#1f77b4'}
+            },
+            yaxis3: {
+              title: 'Peak wave Period (s)',
+              titlefont: {color: '#d62728'},
+              tickfont: {color: '#d62728'},
+              anchor: 'x',
+              overlaying: 'y',
+              side: 'right'
+            },
+            yaxis4: {
+              title: 'Peak Wave Length (m)',
+              titlefont: {color: '#008000'},
+              tickfont: {color: '#008000'},
+              anchor: 'free',
+              overlaying: 'y',
+              side: 'right',
+              position: 0.97
+            }
+          };
+        let graphD = document.getElementById("myDiv");
+        while (graphD.data.length){
+            Plotly.deleteTraces("myDiv", [0]);
+        }
+        Plotly.plot(document.getElementById("myDiv"), data, layout); 
+        
+        
+        })
     }
     else {
         alert('Click Inside Boundary.');
