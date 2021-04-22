@@ -75,6 +75,7 @@ function populateLayers() {
                             layers: layerName + "/z",
                             format: 'image/png',
                             transparent: true,
+                            opacity: 0.5,
                             colorscalerange: '0, 2.0',
                             abovemaxcolor: "extend",
                             belowmincolor: "extend",
